@@ -1,0 +1,2 @@
+# TechZaForgotten.github.io
+LEAAAAVE IF THOU ARETH NOTETH A FRIENDETH
