@@ -27,7 +27,7 @@ rollButton.addEventListener('click', () => {
     const result = rollMassDice(numberOfDice); 
     
     // 4. Update the "Window" on the screen so the player sees it
-    logWindow.innerHTML += `<p>🎲 Rolled ${numberOfDice}d6! Results: [${result.individualRolls.join(', ')}] <strong>Total: ${result.total}</strong></p>`;
+    logWindow.innerHTML += `<p> Rolled ${numberOfDice}d6! Results: [${result.individualRolls.join(', ')}] <strong>Total: ${result.total}</strong></p>`;
     
     // Auto-scroll the log window to the bottom
     logWindow.scrollTop = logWindow.scrollHeight; 
