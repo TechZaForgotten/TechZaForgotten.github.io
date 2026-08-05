@@ -1,1 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DM & Player Companion</title>
+    <style>
+        body { font-family: sans-serif; background: #222; color: #fff; padding: 20px; }
+        .window { border: 2px solid #555; background: #111; padding: 15px; height: 200px; overflow-y: scroll; margin-top: 10px; }
+        button { background: #800000; color: white; padding: 10px; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
 
+    <h1>D&D Custom Move Engine</h1>
+
+    <!-- Input area for the players -->
+    <label for="diceCount">How many d6 to roll?</label>
+    <input type="number" id="diceCount" value="1" min="1">
+    
+    <button id="rollBtn">Roll Custom Move</button>
+
+    <h3>Game Log Window</h3>
+    <!-- This is the window where they see what is happening -->
+    <div id="logWindow" class="window">Welcome to the session. Ready for orders...</div>
+
+    <!-- THIS LINE LINKS YOUR JAVASCRIPT BRAIN TO THIS SKELETON -->
+    <script src="app.js"></script>
+</body>
+</html>
