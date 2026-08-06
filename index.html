@@ -2,54 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ALOT OF DICES ARE ANNOYING</title>
+    <title>I aint rollin allat</title>
     <style>
         body { font-family: 'Courier New', Courier, monospace; background: #1a1a1a; color: #f5f5f5; padding: 30px; }
-        .panel { background: #262626; padding: 20px; border: 2px solid #3e3e3e; border-radius: 6px; max-width: 600px; margin: 0 auto; }
-        .controls { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        label { display: block; font-size: 12px; text-transform: uppercase; color: #aaa; margin-bottom: 5px; }
-        input, select { width: 90%; background: #111; color: #fff; border: 1px solid #555; padding: 10px; border-radius: 4px; font-size: 16px; }
-        button { width: 100%; background: #8b0000; color: white; padding: 15px; border: none; font-size: 18px; font-weight: bold; cursor: pointer; border-radius: 4px; transition: background 0.2s; }
+        .panel { background: #262626; padding: 20px; border: 2px solid #3e3e3e; border-radius: 6px; max-width: 700px; margin: 0 auto; }
+        .dice-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+        .die-box { background: #1e1e1e; padding: 10px; border: 1px solid #444; border-radius: 4px; text-align: center; }
+        label { display: block; font-size: 14px; font-weight: bold; color: #ff4500; margin-bottom: 5px; }
+        input[type="number"] { width: 75%; background: #000; color: #fff; border: 1px solid #555; padding: 8px; border-radius: 4px; text-align: center; font-size: 16px; }
+        .modifier-section { background: #1e1e1e; padding: 15px; border: 1px solid #444; border-radius: 4px; margin-bottom: 20px; text-align: center; }
+        button { width: 100%; background: #8b0000; color: white; padding: 15px; border: none; font-size: 18px; font-weight: bold; cursor: pointer; border-radius: 4px; letter-spacing: 2px; }
         button:hover { background: #b30000; }
-        .window { border: 2px solid #555; background: #0b0b0b; padding: 15px; height: 250px; overflow-y: scroll; margin-top: 20px; border-radius: 4px; }
-        .roll-entry { border-bottom: 1px dashed #333; padding: 8px 0; font-size: 14px; }
+        .window { border: 2px solid #555; background: #0b0b0b; padding: 15px; height: 280px; overflow-y: scroll; margin-top: 20px; border-radius: 4px; }
+        .roll-entry { border-bottom: 1px dashed #444; padding: 12px 0; font-size: 14px; line-height: 1.5; }
     </style>
 </head>
 <body>
 
     <div class="panel">
-        <h2>ROLL HERE FN</h2>
+        <h2>Roll here big bro</h2>
+        <p style="color: #aaa; font-size: 12px; margin-top: -10px;">Enter the amount of each dice you want to throw simultaneously.</p>
         <hr style="border-color: #444; margin-bottom: 20px;">
 
-        <div class="controls">
-            <div>
-                <label for="diceCount">Quantity</label>
-                <input type="number" id="diceCount" value="1" min="1" max="100">
-            </div>
+        <!-- Grid of all different dice types -->
+        <div class="dice-grid">
+            <div class="die-box"><label>d4</label><input type="number" id="d4Count" value="0" min="0"></div>
+            <div class="die-box"><label>d6</label><input type="number" id="d6Count" value="0" min="0"></div>
+            <div class="die-box"><label>d8</label><input type="number" id="d8Count" value="0" min="0"></div>
+            <div class="die-box"><label>d10</label><input type="number" id="d10Count" value="0" min="0"></div>
+            <div class="die-box"><label>d12</label><input type="number" id="d12Count" value="0" min="0"></div>
+            <div class="die-box"><label>d20</label><input type="number" id="d20Count" value="0" min="0"></div>
+            <div class="die-box"><label>d100</label><input type="number" id="d100Count" value="0" min="0"></div>
             
-            <div>
-                <label for="diceType">Dice Type</label>
-                <select id="diceType">
-                    <option value="4">d4</option>
-                    <option value="6" selected>d6</option>
-                    <option value="8">d8</option>
-                    <option value="10">d10</option>
-                    <option value="12">d12</option>
-                    <option value="20">d20</option>
-                    <option value="100">d100</option>
-                </select>
-            </div>
-
-            <div>
-                <label for="modifier">Modifier (+ / -)</label>
-                <input type="number" id="modifier" value="0">
-            </div>
+            <!-- Global flat modifier box fits right into the grid -->
+            <div class="die-box" style="border-color: #8b0000;"><label style="color: #fff;">MOD (+/-)</label><input type="number" id="globalMod" value="0"></div>
         </div>
         
-        <button id="rollBtn">EXECUTE ROLL</button>
+        <button id="rollBtn">Let it RIDE</button>
 
-        <h3>ROLL LOG</h3>
-        <div id="logWindow" class="window">System ready. Awaiting input...</div>
+        <h3>Heres what ya rolled</h3>
+        <div id="logWindow" class="window">Awaiting multi-dice input...</div>
     </div>
 
     <script src="app.js"></script>
