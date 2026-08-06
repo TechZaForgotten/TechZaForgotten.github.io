@@ -61,7 +61,7 @@ rollButton.addEventListener('click', () => {
     const logEntry = document.createElement('div');
     logEntry.className = 'roll-entry';
     logEntry.innerHTML = `
-        <strong>Dices ya rolled:</strong> <span style="color: #4caf50;">${fullFormula}</span><br>
+        <strong>Dices yah rolled:</strong> <span style="color: #4caf50;">${fullFormula}</span><br>
         ${breakdownHTML}
         <strong>Modifier:</strong> ${modifier}<br>
         <strong>THE TOTAL:</strong> <span style="color: #ff4500; font-size: 18px; font-weight: bold;">${grandTotal}</span>
