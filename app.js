@@ -1,57 +1,81 @@
-// 1. Target the interactive elements on the page
 const rollButton = document.getElementById('rollBtn');
-const diceCountInput = document.getElementById('diceCount');
-const diceTypeSelect = document.getElementById('diceType');
-const modifierInput = document.getElementById('modifier');
 const logWindow = document.getElementById('logWindow');
 
-// 2. The core dice rolling math engine
-function rollDice(count, sides, modifier) {
-    let total = 0;
-    let individualRolls = [];
-
+// Helper function to handle rolling a single type of die multiple times
+function rollSingleDieType(count, sides) {
+    let subTotal = 0;
+    let rolls = [];
     for (let i = 0; i < count; i++) {
-        // Generates a random number from 1 up to the number of sides (e.g., 1 to 20)
         let roll = Math.floor(Math.random() * sides) + 1;
-        total += roll;
-        individualRolls.push(roll);
+        subTotal += roll;
+        rolls.push(roll);
     }
-
-    // Apply the static modifier (+5, -2, etc.) to the grand total
-    let finalTotal = total + modifier;
-
-    return {
-        individualRolls: individualRolls,
-        diceTotal: total,
-        finalTotal: finalTotal
-    };
+    return { subTotal, rolls };
 }
 
-// 3. Listen for clicks on the EXECUTE button
 rollButton.addEventListener('click', () => {
-    // Read the inputs and convert string text into active numbers
-    const count = parseInt(diceCountInput.value) || 1;
-    const sides = parseInt(diceTypeSelect.value);
-    const modifier = parseInt(modifierInput.value) || 0;
+    // 1. Grab values for every single die input box
+    const d4 = parseInt(document.getElementById('d4Count').value) || 0;
+    const d6 = parseInt(document.getElementById('d6Count').value) || 0;
+    const d8 = parseInt(document.getElementById('d8Count').value) || 0;
+    const d10 = parseInt(document.getElementById('d10Count').value) || 0;
+    const d12 = parseInt(document.getElementById('d12Count').value) || 0;
+    const d20 = parseInt(document.getElementById('d20Count').value) || 0;
+    const d100 = parseInt(document.getElementById('d100Count').value) || 0;
+    const modifier = parseInt(document.getElementById('globalMod').value) || 0;
 
-    // Run the rolling engine logic
-    const results = rollDice(count, sides, modifier);
+    // Safety check: Don't roll if all boxes are 0
+    if (d4 === 0 && d6 === 0 && d8 === 0 && d10 === 0 && d12 === 0 && d20 === 0 && d100 === 0 && modifier === 0) {
+        alert("Please enter at least one die or a modifier to roll!");
+        return;
+    }
 
-    // Format the modifier text cleanly for the log display (e.g., "+ 5" or "- 2")
-    let modText = "";
-    if (modifier > 0) modText = ` + ${modifier}`;
-    if (modifier < 0) modText = ` - ${Math.abs(modifier)}`;
+    let grandTotal = 0;
+    let breakdownHTML = "";
+    let formulaParts = [];
 
-    // 4. Construct the log entry and print it to the window screen
+    // 2. Define an array of our dice so we can clean loop through them smoothly
+    const dicePool = [
+        { count: d4, sides: 4 },
+        { count: d6, sides: 6 },
+        { count: d8, sides: 8 },
+        { count: d10, sides: 10 },
+        { count: d12, sides: 12 },
+        { count: d20, sides: 20 },
+        { count: d100, sides: 100 }
+    ];
+
+    // 3. Process each die type if the user actually requested it
+    dicePool.forEach(die => {
+        if (die.count > 0) {
+            formulaParts.push(`${die.count}d${die.sides}`);
+            const result = rollSingleDieType(die.count, die.sides);
+            
+            grandTotal += result.subTotal;
+            // Build a text line showing individual breakdown for this specific die size
+            breakdownHTML += `➡️ <strong>d${die.sides}:</strong> [ ${result.rolls.join(', ')} ] (Subtotal: ${result.subTotal})<br>`;
+        }
+    });
+
+    // 4. Handle adding the static modifier
+    grandTotal += modifier;
+    if (modifier > 0) formulaParts.push(`+${modifier}`);
+    if (modifier < 0) formulaParts.push(`${modifier}`);
+
+    // Create the full calculation formula string (e.g., "2d4 + 3d6 + 5")
+    const fullFormula = formulaParts.join(' + ');
+
+    // 5. Build the massive log window entry card
     const logEntry = document.createElement('div');
     logEntry.className = 'roll-entry';
     logEntry.innerHTML = `
-        <strong>Rolled:</strong> ${count}d${sides}${modText}<br>
-        <strong>Dice:</strong> [ ${results.individualRolls.join(', ')} ] (Sum: ${results.diceTotal})<br>
-        <strong>TOTAL:</strong> <span style="color: #ff4500; font-size: 16px;">${results.finalTotal}</span>
+        <strong>Cast Move:</strong> <span style="color: #4caf50;">${fullFormula}</span><br>
+        ${breakdownHTML}
+        <strong>Static Modifier:</strong> ${modifier}<br>
+        <strong>GRAND TOTAL:</strong> <span style="color: #ff4500; font-size: 18px; font-weight: bold;">${grandTotal}</span>
     `;
 
-    // Append to the window and auto-scroll downwards
+    // Print to screen and force scroll to the bottom
     logWindow.appendChild(logEntry);
     logWindow.scrollTop = logWindow.scrollHeight;
 });
