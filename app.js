@@ -23,7 +23,7 @@ rollButton.addEventListener('click', () => {
     const modifier = parseInt(document.getElementById('globalMod').value) || 0;
 
     if (d4 === 0 && d6 === 0 && d8 === 0 && d10 === 0 && d12 === 0 && d20 === 0 && d100 === 0 && modifier === 0) {
-        alert("Please enter at least one die or a modifier to roll!");
+        alert("You need a dice to roll big bro");
         return;
     }
 
